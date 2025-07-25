@@ -1,0 +1,40 @@
+name: Run bot (Windows)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "user_interface.py"
+  schedule:
+    - cron: "1 */5 * * *"
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Inject Token into config.yml
+        run: |
+          (Get-Content config.yml) -replace 'TokenTimeIsBackBuddyss', '${{ secrets.LICHESS_KEY }}' | Set-Content config.yml
+
+      - name: Use Halexe
+        run: |
+          chmod +x ./engines/hal.exe
+      - name: Run bot
+        run: python user_interface.py "matchmaking"
