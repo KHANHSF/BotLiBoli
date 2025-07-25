@@ -1,5 +1,6 @@
-name: Run bot (Windows)
+name: Run bot
 
+# Controls when the workflow will run
 on:
   workflow_dispatch:
   push:
@@ -16,25 +17,21 @@ concurrency:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
+      - name: Python Dependency Installation
+        uses: py-actions/py-dependency-install@v4.0.0
 
-      - name: Install Python dependencies
-        run: pip install -r requirements.txt
+      - name: Injection For my Repo
+        run: sed -i "s/TokenTimeIsBackBuddyss/${{ secrets.LICHESS_KEY }}/g" config.yml
 
-      - name: Inject Token into config.yml
+      - name: Download and Extract Stockfish
         run: |
-          (Get-Content config.yml) -replace 'TokenTimeIsBackBuddyss', '${{ secrets.LICHESS_KEY }}' | Set-Content config.yml
+          chmod +x ./engines/hal
 
-      - name: Use Halexe
-        run: |
-          chmod +x ./engines/hal.exe
-      - name: Run bot
-        run: python user_interface.py "matchmaking"
+      # Run the bot
+      - name: Running bot
+        run: python3 user_interface.py "matchmaking"
