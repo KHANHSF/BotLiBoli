@@ -30,7 +30,7 @@ jobs:
 
       - name: Download and Extract Stockfish
         run: |
-          chmod +x ./engines/hal
+          chmod +x ./engines/stormphrax-7.0.0-avx2
 
       # Run the bot
       - name: Running bot
