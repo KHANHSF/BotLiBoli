@@ -134,7 +134,7 @@ resign:
   against_humans: true                    # Activate whether these settings should apply against humans.
 
 challenge:                                # Incoming challenges.
-  concurrency: 1                          # Number of games to play simultaneously.
+  concurrency: 100                          # Number of games to play simultaneously.
   max_takebacks: 3                        # Maximum number of takebacks granted to a human.
   bullet_with_increment_only: false       # Whether bullet games against BOTs should only be accepted with increment.
 # min_increment: 0                        # Minimum amount of increment to accept a challenge.
@@ -166,7 +166,7 @@ challenge:                                # Incoming challenges.
     - rated                               # Rated games
 
 matchmaking:
-  delay: 10                               # Time in seconds the bot must be idle before a new challenge is started.
+  delay: 60                               # Time in seconds the bot must be idle before a new challenge is started.
   timeout: 30                             # Time until a challenge is canceled.
   selection: cyclic              # Matchmkaing type selection is one of "weighted_random", "sequential" or "cyclic".
   types:                                  # Matchmaking types of which one is selected before each game.
