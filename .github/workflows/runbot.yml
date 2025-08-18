@@ -29,7 +29,7 @@ jobs:
         run: sed -i "s/TokenTimeIsBackBuddyss/${{ secrets.LICHESS_KEY }}/g" config.yml
 
       - name: Download and Extract Stockfish
-        run: chmod +x ./engines/jellyfish
+        run: chmod +x ./engines/hal
           
       # Run the bot
       - name: Running bot
